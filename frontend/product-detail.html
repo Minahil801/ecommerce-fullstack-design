@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Product Detail - Brand</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="container topbar-inner">
+    <div class="topbar-left"><span><i class="fa fa-phone"></i> +1 234 567 890</span></div>
+    <div class="topbar-right"><a href="#">Help</a><a href="#"><i class="fa fa-globe"></i> English</a></div>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<header class="navbar">
+  <div class="container navbar-inner">
+    <div class="logo"><a href="index.html"><i class="fa fa-bolt"></i> <span>Brand</span></a></div>
+    <div class="search-bar">
+      <select class="category-select"><option>All Category</option><option>Electronics</option></select>
+      <input type="text" placeholder="Search for products..."/>
+      <button><i class="fa fa-search"></i> Search</button>
+    </div>
+    <div class="nav-icons">
+      <a href="login.html" class="nav-icon"><i class="fa fa-user"></i><span>Profile</span></a>
+      <a href="#" class="nav-icon"><i class="fa fa-heart"></i><span>Wishlist</span></a>
+      <a href="cart.html" class="nav-icon cart-icon">
+        <i class="fa fa-shopping-cart"></i><span>Cart</span>
+        <span class="badge" id="cartBadge">0</span>
+      </a>
+    </div>
+    <div class="hamburger" onclick="toggleMenu()"><i class="fa fa-bars"></i></div>
+  </div>
+  <nav class="nav-links" id="navMenu">
+    <div class="container">
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+      <a href="#">Learn More</a>
+      <a href="#">Sale</a>
+    </div>
+  </nav>
+</header>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a><span>›</span>
+      <a href="products.html">Products</a><span>›</span>
+      <span id="breadcrumbName">Product Detail</span>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT DETAIL -->
+<section class="section-pad">
+  <div class="container">
+    <div class="product-detail">
+      <div class="detail-grid">
+
+        <!-- Images -->
+        <div class="detail-images">
+          <img id="mainImg" src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&q=80" alt="Product" class="main-img"/>
+          <div class="thumb-row" id="thumbRow">
+            <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=200&q=80" class="active" onclick="changeImg(this)"/>
+            <img src="https://images.unsplash.com/photo-1484704849700-f032a568e944?w=200&q=80" onclick="changeImg(this)"/>
+            <img src="https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=200&q=80" onclick="changeImg(this)"/>
+            <img src="https://images.unsplash.com/photo-1524678714210-9917a6c619c2?w=200&q=80" onclick="changeImg(this)"/>
+          </div>
+        </div>
+
+        <!-- Info -->
+        <div class="detail-info" id="detailInfo">
+          <h1 id="detailName">Sony WH-1000XM5 Headphones</h1>
+          <div class="detail-stars">★★★★★ <span style="color:#888;font-size:13px">(128 reviews)</span></div>
+          <div class="detail-price" id="detailPrice">$299.99</div>
+          <div class="detail-old" id="detailOld">$399.99</div>
+          <p class="detail-desc" id="detailDesc">
+            Experience industry-leading noise cancellation with the Sony WH-1000XM5. 
+            Featuring 30-hour battery life, multipoint connection, and crystal-clear call quality 
+            with the built-in microphone array. Premium comfort for all-day wear.
+          </p>
+
+          <!-- Quantity -->
+          <div class="qty-row">
+            <label>Quantity:</label>
+            <div class="qty-control">
+              <button onclick="changeQty(-1)">−</button>
+              <span id="qtyDisplay">1</span>
+              <button onclick="changeQty(1)">+</button>
+            </div>
+            <span style="font-size:13px;color:#28a745;"><i class="fa fa-check-circle"></i> In Stock</span>
+          </div>
+
+          <!-- Actions -->
+          <div class="detail-actions">
+            <button class="btn-add-cart" onclick="addToCartDetail()">
+              <i class="fa fa-shopping-cart"></i> Add to Cart
+            </button>
+            <button class="btn-wishlist-lg"><i class="fa fa-heart"></i></button>
+          </div>
+
+          <!-- Meta -->
+          <div class="detail-meta">
+            <p>Category: <span id="detailCategory">Electronics</span></p>
+            <p>Brand: <span id="detailBrand">Sony</span></p>
+            <p>SKU: <span>SONY-WH1000XM5</span></p>
+            <p>Availability: <span style="color:#28a745">In Stock (15 units)</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RELATED PRODUCTS -->
+    <div class="section-header">
+      <h2>Related Products</h2>
+      <a href="products.html" class="view-all">View All <i class="fa fa-arrow-right"></i></a>
+    </div>
+    <div class="products-grid" id="relatedGrid"></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container footer-grid">
+    <div class="footer-col brand-col">
+      <h3><i class="fa fa-bolt"></i> Brand</h3>
+      <p>Your one-stop shop for the best electronics and gadgets.</p>
+      <div class="social-links">
+        <a href="#"><i class="fab fa-facebook"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+    <div class="footer-col"><h4>About</h4><ul><li><a href="#">About Us</a></li><li><a href="#">Find Store</a></li></ul></div>
+    <div class="footer-col"><h4>For Users</h4><ul><li><a href="login.html">Login</a></li><li><a href="login.html">Register</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><p>© 2026 Brand. All rights reserved.</p></div>
+</footer>
+
+<script src="app.js"></script>
+<script>
+  let qty = 1;
+
+  function changeQty(delta) {
+    qty = Math.max(1, qty + delta);
+    document.getElementById('qtyDisplay').textContent = qty;
+  }
+
+  function changeImg(el) {
+    document.getElementById('mainImg').src = el.src.replace('w=200', 'w=600');
+    document.querySelectorAll('.thumb-row img').forEach(i => i.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  function addToCartDetail() {
+    const name = document.getElementById('detailName').textContent;
+    const priceText = document.getElementById('detailPrice').textContent;
+    const price = parseFloat(priceText.replace('$',''));
+    const img = document.getElementById('mainImg').src;
+
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    const existing = cart.find(i => i.name === name);
+    if (existing) { existing.qty += qty; } 
+    else { cart.push({ name, price, img, qty }); }
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartBadge();
+
+    const btn = document.querySelector('.btn-add-cart');
+    btn.innerHTML = '<i class="fa fa-check"></i> Added to Cart!';
+    btn.style.background = '#28a745';
+    setTimeout(() => {
+      btn.innerHTML = '<i class="fa fa-shopping-cart"></i> Add to Cart';
+      btn.style.background = '';
+    }, 2000);
+  }
+
+  // Load product from URL param
+  window.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    const id = parseInt(params.get('id'));
+    if (!isNaN(id) && allProducts[id]) {
+      const p = allProducts[id];
+      document.getElementById('detailName').textContent = p.name;
+      document.getElementById('detailPrice').textContent = '$' + p.price;
+      document.getElementById('detailOld').textContent = '$' + (p.price * 1.2).toFixed(2);
+      document.getElementById('detailBrand').textContent = p.brand;
+      document.getElementById('detailCategory').textContent = p.category;
+      document.getElementById('breadcrumbName').textContent = p.name;
+      document.getElementById('mainImg').src = p.img;
+    }
+    renderProducts(allProducts.slice(0, 4), 'relatedGrid');
+    updateCartBadge();
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Brand - Electronics eCommerce</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="container topbar-inner">
+    <div class="topbar-left">
+      <span><i class="fa fa-phone"></i> +1 234 567 890</span>
+      <span><i class="fa fa-envelope"></i> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="01727471716e7375416373606f652f626e6c">[email&#160;protected]</a></span>
+    </div>
+    <div class="topbar-right">
+      <a href="#">Sell on Brand</a>
+      <a href="#">Help</a>
+      <a href="#"><i class="fa fa-globe"></i> English</a>
+    </div>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<header class="navbar">
+  <div class="container navbar-inner">
+    <div class="logo"><i class="fa fa-bolt"></i> <span>Brand</span></div>
+    <div class="search-bar">
+      <select class="category-select">
+        <option>All Category</option>
+        <option>Electronics</option>
+        <option>Gadgets</option>
+        <option>Clothing</option>
+        <option>Home</option>
+      </select>
+      <input type="text" placeholder="Search for products..."/>
+      <button><i class="fa fa-search"></i> Search</button>
+    </div>
+    <div class="nav-icons">
+      <a href="login.html" class="nav-icon"><i class="fa fa-user"></i><span>Profile</span></a>
+      <a href="#" class="nav-icon"><i class="fa fa-heart"></i><span>Wishlist</span></a>
+      <a href="cart.html" class="nav-icon cart-icon">
+        <i class="fa fa-shopping-cart"></i><span>Cart</span>
+        <span class="badge" id="cartBadge">0</span>
+      </a>
+    </div>
+    <div class="hamburger" onclick="toggleMenu()"><i class="fa fa-bars"></i></div>
+  </div>
+  <nav class="nav-links" id="navMenu">
+    <div class="container">
+      <a href="index.html" class="active">Home</a>
+      <a href="products.html">Products</a>
+      <a href="#">Learn More</a>
+      <a href="#">Sale</a>
+      <a href="#">Blog</a>
+    </div>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container hero-inner">
+    <aside class="sidebar">
+      <h3>Categories</h3>
+      <ul>
+        <li class="active"><a href="#"><i class="fa fa-microchip"></i> Electronics</a></li>
+        <li><a href="#"><i class="fa fa-tshirt"></i> Clothes & Apparel</a></li>
+        <li><a href="#"><i class="fa fa-tv"></i> Gadgets</a></li>
+        <li><a href="#"><i class="fa fa-home"></i> Home & Garden</a></li>
+        <li><a href="#"><i class="fa fa-child"></i> Kids & Toys</a></li>
+        <li><a href="#"><i class="fa fa-dumbbell"></i> Sports & Outdoor</a></li>
+        <li><a href="#"><i class="fa fa-blender"></i> Home Appliances</a></li>
+        <li><a href="#"><i class="fa fa-gem"></i> Jewelry & Watches</a></li>
+        <li><a href="#"><i class="fa fa-camera"></i> Cameras</a></li>
+        <li><a href="#"><i class="fa fa-mobile"></i> Mobile Phones</a></li>
+      </ul>
+    </aside>
+    <div class="hero-banner">
+      <div class="banner-content">
+        <p class="banner-sub">Latest trending</p>
+        <h1>Electronic Items</h1>
+        <a href="products.html" class="btn-primary">Learn More</a>
+      </div>
+      <div class="banner-image">
+        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&q=80" alt="Headphones"/>
+      </div>
+    </div>
+    <div class="hero-side">
+      <div class="side-card blue">
+        <p>Smart Gadgets</p>
+        <h4>Smart Watches</h4>
+        <a href="products.html">Shop Now</a>
+        <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=120&q=80" alt="Watch"/>
+      </div>
+      <div class="side-card teal">
+        <p>Best Seller</p>
+        <h4>Latest Phones</h4>
+        <a href="products.html">Shop Now</a>
+        <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=120&q=80" alt="Phone"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED PRODUCTS -->
+<section class="featured section-pad">
+  <div class="container">
+    <div class="section-header">
+      <h2>Featured Products</h2>
+      <a href="products.html" class="view-all">View All <i class="fa fa-arrow-right"></i></a>
+    </div>
+    <div class="products-grid" id="featuredGrid">
+      <!-- JS will render cards -->
+    </div>
+  </div>
+</section>
+
+<!-- DEALS & OFFERS -->
+<section class="deals section-pad">
+  <div class="container">
+    <div class="section-header">
+      <h2>Deals and Offers</h2>
+      <div class="countdown">
+        <span>Ends in:</span>
+        <div class="timer">
+          <span id="hours">04</span>h <span id="minutes">23</span>m <span id="seconds">15</span>s
+        </div>
+      </div>
+    </div>
+    <div class="deals-grid">
+      <div class="deal-card"><img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=150&q=80" alt="Watch"/><h5>Smart Watches</h5><span class="discount">-25%</span></div>
+      <div class="deal-card"><img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=150&q=80" alt="Phone"/><h5>Mobile Phones</h5><span class="discount">-15%</span></div>
+      <div class="deal-card"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=150&q=80" alt="Headphone"/><h5>Headphones</h5><span class="discount">-30%</span></div>
+      <div class="deal-card"><img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=150&q=80" alt="Laptop"/><h5>Laptops</h5><span class="discount">-20%</span></div>
+      <div class="deal-card"><img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=150&q=80" alt="Camera"/><h5>Cameras</h5><span class="discount">-10%</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="categories-section section-pad">
+  <div class="container two-col">
+    <div class="cat-block">
+      <div class="cat-header"><h3>Home and Outdoor</h3><a href="products.html">Source now →</a></div>
+      <div class="cat-grid">
+        <div class="cat-item"><img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=120&q=80" alt="Sofa"/><p>Soft Sofas</p><span>From $19.99</span></div>
+        <div class="cat-item"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&q=80" alt="Chair"/><p>Dining Chairs</p><span>From $15.99</span></div>
+        <div class="cat-item"><img src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=120&q=80" alt="Lamp"/><p>Home Speakers</p><span>From $29.99</span></div>
+        <div class="cat-item"><img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=120&q=80" alt="Camera"/><p>Garden Items</p><span>From $12.99</span></div>
+      </div>
+    </div>
+    <div class="cat-block">
+      <div class="cat-header"><h3>Consumer Electronics</h3><a href="products.html">Source now →</a></div>
+      <div class="cat-grid">
+        <div class="cat-item"><img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=120&q=80" alt="Phone"/><p>Smart Phones</p><span>From $99.99</span></div>
+        <div class="cat-item"><img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=120&q=80" alt="Laptop"/><p>Laptops</p><span>From $299.99</span></div>
+        <div class="cat-item"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=120&q=80" alt="Headphone"/><p>Headphones</p><span>From $29.99</span></div>
+        <div class="cat-item"><img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=120&q=80" alt="Watch"/><p>Smart Watches</p><span>From $49.99</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SUPPLIER BANNER -->
+<section class="supplier-banner">
+  <div class="container">
+    <div class="supplier-inner">
+      <div class="supplier-text">
+        <h2>An easy way to send requests to all suppliers</h2>
+        <p>Send one request to multiple suppliers and get the best deals instantly.</p>
+        <a href="#" class="btn-white">Get Started Now</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RECOMMENDED -->
+<section class="recommended section-pad">
+  <div class="container">
+    <div class="section-header">
+      <h2>Recommended Items</h2>
+      <a href="products.html" class="view-all">View All <i class="fa fa-arrow-right"></i></a>
+    </div>
+    <div class="products-grid" id="recommendedGrid"></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container footer-grid">
+    <div class="footer-col brand-col">
+      <h3><i class="fa fa-bolt"></i> Brand</h3>
+      <p>Your one-stop shop for the best electronics and gadgets at unbeatable prices.</p>
+      <div class="social-links">
+        <a href="#"><i class="fab fa-facebook"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-linkedin"></i></a>
+      </div>
+    </div>
+    <div class="footer-col"><h4>About</h4><ul><li><a href="#">About Us</a></li><li><a href="#">Find Store</a></li><li><a href="#">Categories</a></li><li><a href="#">Blogs</a></li></ul></div>
+    <div class="footer-col"><h4>Partnership</h4><ul><li><a href="#">About Us</a></li><li><a href="#">Find Store</a></li><li><a href="#">Categories</a></li><li><a href="#">Blogs</a></li></ul></div>
+    <div class="footer-col"><h4>Information</h4><ul><li><a href="#">Help Center</a></li><li><a href="#">Money Refund</a></li><li><a href="#">Shipping Info</a></li><li><a href="#">Returns</a></li></ul></div>
+    <div class="footer-col"><h4>For Users</h4><ul><li><a href="login.html">Login</a></li><li><a href="login.html">Register</a></li><li><a href="#">Settings</a></li><li><a href="#">My Orders</a></li></ul></div>
+    <div class="footer-col">
+      <h4>Get App</h4>
+      <a href="#" class="app-btn"><i class="fab fa-apple"></i> App Store</a>
+      <a href="#" class="app-btn"><i class="fab fa-google-play"></i> Google Play</a>
+    </div>
+  </div>
+  <div class="fo
