@@ -6,6 +6,7 @@
   <title>Login - Brand</title>
   <link rel="stylesheet" href="style.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body style="background:#f5f7ff;">
 
@@ -54,16 +55,7 @@
 
     <button class="auth-btn" onclick="login()">Login</button>
 
-    <div class="divider">or continue with</div>
 
-    <div style="display:flex;gap:10px;">
-      <button onclick="socialLogin('Google')" style="flex:1;border:1.5px solid #ddd;background:#fff;padding:10px;border-radius:8px;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;gap:6px;">
-        <i class="fab fa-google" style="color:#ea4335;"></i> Google
-      </button>
-      <button onclick="socialLogin('Facebook')" style="flex:1;border:1.5px solid #ddd;background:#fff;padding:10px;border-radius:8px;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;gap:6px;">
-        <i class="fab fa-facebook" style="color:#1877f2;"></i> Facebook
-      </button>
-    </div>
 
     <div class="auth-switch">
       Don't have an account? <a href="#" onclick="toggleAuth()">Register here</a>
@@ -271,6 +263,49 @@
     }));
     localStorage.setItem('token', 'social-token-' + Date.now());
     window.location.href = 'index.html';
+  }
+
+  // =============================================
+  // GOOGLE LOGIN — Real OAuth
+  // =============================================
+  var GOOGLE_CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID'; // Replace with your Client ID
+
+  function googleLogin() {
+    // Check if Google API loaded
+    if (typeof google === 'undefined') {
+      showMsg('loginMsg', '⚠️ Google login loading... try again!', true);
+      return;
+    }
+
+    var client = google.accounts.oauth2.initTokenClient({
+      client_id: GOOGLE_CLIENT_ID,
+      scope: 'email profile',
+      callback: function(response) {
+        if (response.access_token) {
+          // Get user info from Google
+          fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+            headers: { Authorization: 'Bearer ' + response.access_token }
+          })
+          .then(function(res) { return res.json(); })
+          .then(function(googleUser) {
+            // Save user
+            localStorage.setItem('user', JSON.stringify({
+              name:   googleUser.name,
+              email:  googleUser.email,
+              avatar: googleUser.picture,
+              role:   'user'
+            }));
+            localStorage.setItem('token', 'google-token-' + Date.now());
+            showMsg('loginMsg', '✅ Google login successful! Redirecting...', false);
+            setTimeout(function() { window.location.href = 'index.html'; }, 1000);
+          })
+          .catch(function() {
+            showMsg('loginMsg', 'Google login failed!', true);
+          });
+        }
+      }
+    });
+    client.requestAccessToken();
   }
 
   // Enter key support
