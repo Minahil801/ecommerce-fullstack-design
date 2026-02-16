@@ -116,97 +116,171 @@
 
 <script src="app.js"></script>
 <script>
+  var API = 'http://localhost:5000/api';
+
   function toggleAuth() {
-    const login = document.getElementById('loginCard');
-    const reg = document.getElementById('registerCard');
+    var login = document.getElementById('loginCard');
+    var reg   = document.getElementById('registerCard');
     if (login.style.display === 'none') {
       login.style.display = 'block';
-      reg.style.display = 'none';
+      reg.style.display   = 'none';
     } else {
       login.style.display = 'none';
-      reg.style.display = 'block';
+      reg.style.display   = 'block';
     }
   }
 
+  function showMsg(id, text, isError) {
+    var el = document.getElementById(id);
+    el.style.color   = isError ? '#e74c3c' : '#28a745';
+    el.textContent   = text;
+  }
+
+  function setBtn(id, text, disabled) {
+    var btn = document.getElementById(id);
+    if (btn) { btn.textContent = text; btn.disabled = disabled; }
+  }
+
+  // =============================================
+  // LOGIN — JWT Backend
+  // =============================================
   function login() {
-    const email = document.getElementById('loginEmail').value;
-    const pass = document.getElementById('loginPassword').value;
-    const msg = document.getElementById('loginMsg');
+    var email = document.getElementById('loginEmail').value.trim();
+    var pass  = document.getElementById('loginPassword').value.trim();
 
     if (!email || !pass) {
-      msg.style.color = '#e74c3c';
-      msg.textContent = 'Please fill in all fields!';
+      showMsg('loginMsg', 'Please fill in all fields!', true);
       return;
     }
 
-    // Check stored users
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-    const user = users.find(u => u.email === email && u.password === pass);
+    showMsg('loginMsg', 'Logging in...', false);
 
-    // Also allow demo admin
-    if (email === 'admin@brand.com' && pass === 'admin123') {
-      localStorage.setItem('user', JSON.stringify({ name: 'Admin', email, role: 'admin' }));
-      msg.style.color = '#28a745';
-      msg.textContent = 'Login successful! Redirecting...';
-      setTimeout(() => window.location.href = 'index.html', 1000);
-      return;
-    }
-
-    if (user) {
-      localStorage.setItem('user', JSON.stringify(user));
-      msg.style.color = '#28a745';
-      msg.textContent = 'Login successful! Redirecting...';
-      setTimeout(() => window.location.href = 'index.html', 1000);
-    } else {
-      msg.style.color = '#e74c3c';
-      msg.textContent = 'Invalid email or password!';
-    }
+    // Try backend API first
+    fetch(API + '/auth/login', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ email: email, password: pass })
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      if (data.success && data.token) {
+        // ✅ Save JWT token + user info
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify({
+          name:  data.user.name,
+          email: data.user.email,
+          role:  data.user.role,
+          id:    data.user._id
+        }));
+        showMsg('loginMsg', '✅ Login successful! Redirecting...', false);
+        setTimeout(function() { window.location.href = 'index.html'; }, 1000);
+      } else {
+        showMsg('loginMsg', data.message || 'Invalid email or password!', true);
+      }
+    })
+    .catch(function() {
+      // Backend offline — local fallback
+      if (email === 'admin@brand.com' && pass === 'admin123') {
+        localStorage.setItem('token', 'local-admin-token');
+        localStorage.setItem('user', JSON.stringify({ name:'Admin', email:email, role:'admin' }));
+        showMsg('loginMsg', '✅ Login successful! Redirecting...', false);
+        setTimeout(function() { window.location.href = 'index.html'; }, 1000);
+        return;
+      }
+      var users = JSON.parse(localStorage.getItem('users') || '[]');
+      var found = users.find(function(u) { return u.email===email && u.password===pass; });
+      if (found) {
+        localStorage.setItem('token', 'local-token-' + Date.now());
+        localStorage.setItem('user', JSON.stringify({ name:found.name, email:found.email, role:found.role||'user' }));
+        showMsg('loginMsg', '✅ Login successful! Redirecting...', false);
+        setTimeout(function() { window.location.href = 'index.html'; }, 1000);
+      } else {
+        showMsg('loginMsg', 'Invalid email or password!', true);
+      }
+    });
   }
 
+  // =============================================
+  // REGISTER — JWT Backend
+  // =============================================
   function register() {
-    const name = document.getElementById('regName').value;
-    const email = document.getElementById('regEmail').value;
-    const pass = document.getElementById('regPassword').value;
-    const confirm = document.getElementById('regConfirm').value;
-    const terms = document.getElementById('terms').checked;
-    const msg = document.getElementById('regMsg');
+    var name    = document.getElementById('regName').value.trim();
+    var email   = document.getElementById('regEmail').value.trim();
+    var pass    = document.getElementById('regPassword').value.trim();
+    var confirm = document.getElementById('regConfirm').value.trim();
+    var terms   = document.getElementById('terms').checked;
 
     if (!name || !email || !pass || !confirm) {
-      msg.style.color = '#e74c3c';
-      msg.textContent = 'Please fill in all fields!';
-      return;
+      showMsg('regMsg', 'Please fill in all fields!', true); return;
     }
     if (pass !== confirm) {
-      msg.style.color = '#e74c3c';
-      msg.textContent = 'Passwords do not match!';
-      return;
+      showMsg('regMsg', 'Passwords do not match!', true); return;
+    }
+    if (pass.length < 6) {
+      showMsg('regMsg', 'Password must be at least 6 characters!', true); return;
     }
     if (!terms) {
-      msg.style.color = '#e74c3c';
-      msg.textContent = 'Please accept terms & conditions!';
-      return;
+      showMsg('regMsg', 'Please accept terms & conditions!', true); return;
     }
 
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-    if (users.find(u => u.email === email)) {
-      msg.style.color = '#e74c3c';
-      msg.textContent = 'Email already registered!';
-      return;
-    }
+    showMsg('regMsg', 'Creating account...', false);
 
-    users.push({ name, email, password: pass, role: 'user' });
-    localStorage.setItem('users', JSON.stringify(users));
-    localStorage.setItem('user', JSON.stringify({ name, email, role: 'user' }));
-
-    msg.style.color = '#28a745';
-    msg.textContent = 'Account created! Redirecting...';
-    setTimeout(() => window.location.href = 'index.html', 1000);
+    // Try backend API first
+    fetch(API + '/auth/register', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ name: name, email: email, password: pass })
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      if (data.success && data.token) {
+        // ✅ Save JWT token + user info
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify({
+          name:  data.user.name,
+          email: data.user.email,
+          role:  data.user.role,
+          id:    data.user._id
+        }));
+        showMsg('regMsg', '✅ Account created! Redirecting...', false);
+        setTimeout(function() { window.location.href = 'index.html'; }, 1000);
+      } else {
+        showMsg('regMsg', data.message || 'Registration failed!', true);
+      }
+    })
+    .catch(function() {
+      // Backend offline — local fallback
+      var users = JSON.parse(localStorage.getItem('users') || '[]');
+      if (users.find(function(u){ return u.email===email; })) {
+        showMsg('regMsg', 'Email already registered!', true); return;
+      }
+      users.push({ name:name, email:email, password:pass, role:'user' });
+      localStorage.setItem('users', JSON.stringify(users));
+      localStorage.setItem('token', 'local-token-' + Date.now());
+      localStorage.setItem('user', JSON.stringify({ name:name, email:email, role:'user' }));
+      showMsg('regMsg', '✅ Account created! Redirecting...', false);
+      setTimeout(function() { window.location.href = 'index.html'; }, 1000);
+    });
   }
 
   function socialLogin(provider) {
-    localStorage.setItem('user', JSON.stringify({ name: provider + ' User', email: provider.toLowerCase() + '@brand.com', role: 'user' }));
+    localStorage.setItem('user', JSON.stringify({
+      name:  provider + ' User',
+      email: provider.toLowerCase() + '@brand.com',
+      role:  'user'
+    }));
+    localStorage.setItem('token', 'social-token-' + Date.now());
     window.location.href = 'index.html';
   }
+
+  // Enter key support
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      var loginCard = document.getElementById('loginCard');
+      if (loginCard.style.display !== 'none') login();
+      else register();
+    }
+  });
 
   window.addEventListener('DOMContentLoaded', updateCartBadge);
 </script>
