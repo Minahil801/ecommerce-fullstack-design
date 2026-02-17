@@ -165,7 +165,9 @@
           id:    data.user._id
         }));
         showMsg('loginMsg', '✅ Login successful! Redirecting...', false);
-        setTimeout(function() { window.location.href = 'index.html'; }, 1000);
+        // Admin → admin.html, User → index.html
+        var redirect = data.user.role === 'admin' ? 'admin.html' : 'index.html';
+        setTimeout(function() { window.location.href = redirect; }, 1000);
       } else {
         showMsg('loginMsg', data.message || 'Invalid email or password!', true);
       }
@@ -176,7 +178,7 @@
         localStorage.setItem('token', 'local-admin-token');
         localStorage.setItem('user', JSON.stringify({ name:'Admin', email:email, role:'admin' }));
         showMsg('loginMsg', '✅ Login successful! Redirecting...', false);
-        setTimeout(function() { window.location.href = 'index.html'; }, 1000);
+        setTimeout(function() { window.location.href = 'admin.html'; }, 1000);
         return;
       }
       var users = JSON.parse(localStorage.getItem('users') || '[]');
@@ -185,7 +187,8 @@
         localStorage.setItem('token', 'local-token-' + Date.now());
         localStorage.setItem('user', JSON.stringify({ name:found.name, email:found.email, role:found.role||'user' }));
         showMsg('loginMsg', '✅ Login successful! Redirecting...', false);
-        setTimeout(function() { window.location.href = 'index.html'; }, 1000);
+        var redirect = found.role === 'admin' ? 'admin.html' : 'index.html';
+        setTimeout(function() { window.location.href = redirect; }, 1000);
       } else {
         showMsg('loginMsg', 'Invalid email or password!', true);
       }
