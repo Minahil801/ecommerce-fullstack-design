@@ -1,4 +1,0 @@
-https://ecommerce-fullstack-design.netlify.app/
-
-frontend url
-
